@@ -4,3 +4,6 @@ data/slp/
 __pycache__/
 *.ckpt
 *.zip
+latent_diffusion.egg-info/
+.vscode/
+__pycache__/
