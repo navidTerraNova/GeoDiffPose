@@ -1,0 +1,123 @@
+model:
+  base_learning_rate: 0.0001
+  target: ldm.models.diffusion.ddpm.LatentDiffusion
+  params:
+    linear_start: 0.0015
+    linear_end: 0.0155
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    loss_type: l1
+    first_stage_key: image
+    cond_stage_key: pose
+    image_size: 32
+    channels: 4
+    cond_stage_trainable: true
+    conditioning_key: crossattn
+    monitor: val/loss_simple_ema
+    scale_by_std: true
+    scheduler_config:
+      target: ldm.lr_scheduler.LambdaLinearScheduler
+      params:
+        warm_up_steps:
+        - 1000
+        cycle_lengths:
+        - 10000000000000
+        f_start:
+        - 1.0e-06
+        f_max:
+        - 1.0
+        f_min:
+        - 1.0
+    unet_config:
+      target: ldm.modules.diffusionmodules.openaimodel.UNetModel
+      params:
+        image_size: 32
+        in_channels: 4
+        out_channels: 4
+        model_channels: 192
+        attention_resolutions:
+        - 1
+        - 2
+        - 4
+        - 8
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        - 2
+        - 4
+        - 4
+        num_heads: 8
+        use_spatial_transformer: true
+        transformer_depth: 1
+        context_dim: 512
+        use_scale_shift_norm: true
+        resblock_updown: true
+    first_stage_config:
+      target: ldm.models.autoencoder.AutoencoderKL
+      params:
+        embed_dim: 4
+        monitor: val/rec_loss
+        ckpt_path: models/first_stage_models/kl-f8/model.ckpt
+        ddconfig:
+          double_z: true
+          z_channels: 4
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          - 4
+          num_res_blocks: 2
+          attn_resolutions: []
+          dropout: 0.0
+        lossconfig:
+          target: torch.nn.Identity
+    cond_stage_config:
+      target: ldm.data.slp_kpts_xy_mlp_crossattn.PoseEmbedder
+      params:
+        input_dim: 26
+        embed_dim: 512
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 16
+    num_workers: 5
+    wrap: false
+    train:
+      target: ldm.data.slp_kpts_full_mlp_concat.SLPPoseTrain
+      params:
+        size: 256
+        target_dir: target_2      # ← change to switch cover type
+
+    validation:
+      target: ldm.data.slp_kpts_full_mlp_concat.SLPPoseValidation
+      params:
+        size: 256
+        target_dir: target_2      # ← change to switch cover type
+        
+lightning:
+  callbacks:
+    # Optional: Checkpoint Callback
+    checkpoint_callback:
+      target: pytorch_lightning.callbacks.ModelCheckpoint
+      params:
+        monitor: "val/loss_simple_ema"
+        mode: "min"
+        save_top_k: 3
+        save_last: True
+        filename: "epoch={epoch:02d}-val_loss={val/loss_simple_ema:.4f}"
+        auto_insert_metric_name: False
+
+    image_logger:
+      target: main.ImageLogger
+      params:
+        batch_frequency: 2000
+        max_images: 8
+        increase_log_steps: False
+
+  trainer:
+    benchmark: True

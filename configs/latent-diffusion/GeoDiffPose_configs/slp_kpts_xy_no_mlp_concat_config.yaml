@@ -12,8 +12,8 @@ model:
     cond_stage_key: pose
     image_size: 32
     channels: 4
-    cond_stage_trainable: true
-    conditioning_key: crossattn
+    cond_stage_trainable: false
+    conditioning_key: concat
     monitor: val/loss_simple_ema
     scale_by_std: true
     scheduler_config:
@@ -33,7 +33,7 @@ model:
       target: ldm.modules.diffusionmodules.openaimodel.UNetModel
       params:
         image_size: 32
-        in_channels: 4
+        in_channels: 30
         out_channels: 4
         model_channels: 192
         attention_resolutions:
@@ -48,9 +48,7 @@ model:
         - 4
         - 4
         num_heads: 8
-        use_spatial_transformer: true
-        transformer_depth: 1
-        context_dim: 512
+        use_spatial_transformer: false
         use_scale_shift_norm: true
         resblock_updown: true
     first_stage_config:
@@ -77,10 +75,8 @@ model:
         lossconfig:
           target: torch.nn.Identity
     cond_stage_config:
-      target: ldm.data.slp_kpts_full_mlp_crossattn.PoseEmbedder
-      params:
-        input_dim: 39
-        embed_dim: 512
+      target: ldm.data.slp_kpts_xy_no_mlp_concat.Identity
+      params: {}
 data:
   target: main.DataModuleFromConfig
   params:
@@ -88,13 +84,16 @@ data:
     num_workers: 5
     wrap: false
     train:
-      target: ldm.data.slp_kpts_full_mlp_crossattn.SLPPoseTrain
+      target: ldm.data.slp_kpts_full_mlp_concat.SLPPoseTrain
       params:
         size: 256
+        target_dir: target_2      # ← change to switch cover type
+
     validation:
-      target: ldm.data.slp_kpts_full_mlp_crossattn.SLPPoseValidation
+      target: ldm.data.slp_kpts_full_mlp_concat.SLPPoseValidation
       params:
         size: 256
+        target_dir: target_2      # ← change to switch cover type
         
 lightning:
   callbacks:

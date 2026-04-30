@@ -55,7 +55,7 @@ Pose sampler scripts are located in scripts/pose_sampler.
 
 - main.py: training entry point (PyTorch Lightning)
 - ldm/: diffusion model, modules, and data utilities
-- configs/latent-diffusion/: model and experiment configs
+- configs/latent-diffusion/GeoDiffPose_configs: model and experiment configs
 - scripts/pose_sampler/: inference scripts for each conditioning variant
 - data/slp-conditional/: expected dataset root for conditional training/sampling
 
@@ -87,7 +87,7 @@ General training command:
 
 Example (edit config as needed):
 
-    python main.py -t True --base configs/latent-diffusion/slp_kpts_full_mlp_crossattn_config.yaml --name slp_kpts_full_mlp_crossattn
+    python main.py -t True --base configs/latent-diffusion/GeoDiffPose_configs/slp_kpts_full_mlp_crossattn_config.yaml --name slp_kpts_full_mlp_crossattn
 
 ## Sampling
 
