@@ -1,4 +1,4 @@
-name: ldm
+name: GeoDiffPose
 channels:
   - pytorch
   - defaults
