@@ -1,4 +1,4 @@
-# Latent Diffusion for Pose-Conditioned Person Generation
+# Geometry-Conditioned Diffusion for Occlusion-Robust In-Bed Pose Estimation
 
 ## Environment Setup
 
