@@ -14,9 +14,7 @@ This repository contains a latent diffusion workflow with pose conditioning exte
 
 ## Paper
 
-This codebase is related to the paper: XXX (add your paper URL here).
-
-Suggested format after you add the link:
+This codebase is related to the paper:
 
 [Geometry-Conditioned Diffusion for Occlusion-Robust In-Bed Pose Estimation](https://arxiv.org/abs/2604.23651)
 
