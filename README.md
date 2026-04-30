@@ -1,6 +1,6 @@
 # Latent Diffusion for Pose-Conditioned Person Generation
 
-Environment Setup:
+## Environment Setup
 
     conda env create -f environment.yaml
     conda activate GeoDiffPose
@@ -29,16 +29,16 @@ Key idea: generate an image from latent noise while conditioning on keypoint inf
 The project explores conditioning along three axes.
 
 1. Keypoint representation
-- Full keypoints: 39 values (13 x, y, v triplets)
-- XY-only keypoints: 26 values (13 x, y pairs)
+    - Full keypoints: 39 values (13 x, y, v triplets)
+    - XY-only keypoints: 26 values (13 x, y pairs)
 
 2. Conditioning encoder
-- No MLP: direct/identity-style mapping of pose vector to conditioning tensor
-- MLP: learned pose projection before injection into the diffusion model
+    - No MLP: direct/identity-style mapping of pose vector to conditioning tensor
+    - MLP: learned pose projection before injection into the diffusion model
 
 3. Injection mechanism
-- Concat conditioning: pose feature maps are spatially expanded and concatenated in the UNet path
-- Cross-attention conditioning: pose embedding is transformed to token/context form and consumed by attention blocks
+    - Concat conditioning: pose feature maps are spatially expanded and concatenated in the UNet path
+    - Cross-attention conditioning: pose embedding is transformed to token/context form and consumed by attention blocks
 
 ## Variant Scripts
 
@@ -58,17 +58,6 @@ Pose sampler scripts are located in scripts/pose_sampler.
 - configs/latent-diffusion/: model and experiment configs
 - scripts/pose_sampler/: inference scripts for each conditioning variant
 - data/slp-conditional/: expected dataset root for conditional training/sampling
-
-## Environment Setup
-
-1. Create and activate environment
-
-    conda env create -f environment.yaml
-    conda activate GeoDiffPose
-
-2. Install local package
-
-    pip install -e .
 
 ## Data Layout (SLP Conditional)
 
@@ -118,3 +107,21 @@ Example (XY + MLP + concat):
 ## Acknowledgment
 
 This repository builds on latent diffusion tooling and includes project-specific conditioning and data handling extensions.
+
+## Citation
+
+If you find this work useful in your research, please cite:
+
+**Geometry-Conditioned Diffusion for Occlusion-Robust In-Bed Pose Estimation**  
+*Navid Aslankhani Khameneh, Marco Carletti, and Cigdem Beyan*  
+Accepted at the 20th IEEE International Conference on Automatic Face and Gesture Recognition (IEEE FG 2026).
+```bibtex
+@inproceedings{khameneh2026geodiffpose,
+  title={Geometry-Conditioned Diffusion for Occlusion-Robust In-Bed Pose Estimation},
+  author={Khameneh, Navid Aslankhani and Carletti, Marco and Beyan, Cigdem},
+  booktitle={Proceedings of the 20th IEEE International Conference on Automatic Face and Gesture Recognition (IEEE FG)},
+  year={2026},
+  eprint={2604.23651},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV}
+}
