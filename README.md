@@ -8,7 +8,9 @@
 
 This repository contains a latent diffusion workflow with pose conditioning extensions for SLP-style keypoints.
 
-![GeoDiffPose architecture](assets/modelfigure.png)
+<p align="center">
+  <img src="assets/GeoDiffPose.png" alt="GeoDiffPose architecture">
+</p>
 
 ## Paper
 
