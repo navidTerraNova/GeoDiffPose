@@ -59,25 +59,19 @@ Pose sampler scripts are located in scripts/pose_sampler.
 - scripts/pose_sampler/: inference scripts for each conditioning variant
 - data/slp-conditional/: expected dataset root for conditional training/sampling
 
-## Data Layout (SLP Conditional)
+## Data Layout and Preparation
 
-Expected structure under data/slp-conditional:
-
-- train.txt, val.txt
-- labels/
-- target/ (or target_2 which indicate the cover type)
-
-The txt split files should list relative image paths used to locate both image targets and matching keypoint label files.
-
-## Data Preparation
+This project uses the SLP dataset (Simultaneously-collected multimodal Lying Pose), a multimodal in-bed pose dataset designed for robust pose estimation under occlusion and adverse visual conditions. The original dataset code and reference material are available in the [SLP repository](https://github.com/ostadabbas/SLP-Dataset-and-Code).
 
 Prepare the dataset under data/slp-conditional with the following structure and meaning:
 
-- labels: keypoint annotation files
-- target: cover 1 type images
-- target_2: cover 2 type images
+- labels/: keypoint annotation files
+- target/: cover 1 type images
+- target_2/: cover 2 type images
 - train.txt: samples included in training
 - val.txt: samples included in validation
+
+The txt split files should list relative image paths used to locate both image targets and matching keypoint label files.
 
 ## Training
 
