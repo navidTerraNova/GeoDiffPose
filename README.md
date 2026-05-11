@@ -114,8 +114,5 @@ Accepted at the 20th IEEE International Conference on Automatic Face and Gesture
   title={Geometry-Conditioned Diffusion for Occlusion-Robust In-Bed Pose Estimation},
   author={Khameneh, Navid Aslankhani and Carletti, Marco and Beyan, Cigdem},
   booktitle={Proceedings of the 20th IEEE International Conference on Automatic Face and Gesture Recognition (IEEE FG)},
-  year={2026},
-  eprint={2604.23651},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV}
-}
+  year={2026}
+  }
