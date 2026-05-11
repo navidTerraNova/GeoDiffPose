@@ -106,7 +106,7 @@ Example (XY + MLP + concat):
 
 ## Acknowledgment
 
-This repository builds on latent diffusion tooling and includes project-specific conditioning and data handling extensions.
+This repository builds on the [LDM repository](https://github.com/CompVis/latent-diffusion) and includes project-specific conditioning and data handling extensions.
 
 ## Citation
 
